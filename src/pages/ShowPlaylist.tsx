@@ -1,0 +1,177 @@
+import React, { useState, useEffect } from "react";
+import PlayVideo from "./PlayVideo";
+import { ListPlus, Play, Shuffle, SquarePen } from "lucide-react";
+import toast, {Toaster} from "react-hot-toast";
+
+interface ShowPlaylistProps {
+  mood: string;
+  playlists: any[];
+}
+
+const ShowPlaylist: React.FC<ShowPlaylistProps> = ({ mood, playlists }) => {
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  const [languageFilter, setLanguageFilter] = useState<string>("All");
+  const [selectedMood, setSelectedMood] = useState<string>(mood);
+  const [shuffledPlaylists, setShuffledPlaylists] = useState<any[]>([]);
+
+  // 🔀 Shuffle logic
+  useEffect(() => {
+    if (playlists && playlists.length > 0) {
+      const shuffled = [...playlists].sort(() => Math.random() - 0.5);
+      setShuffledPlaylists(shuffled);
+    }
+  }, [playlists]);
+
+  const handlePlayAll = () => {
+    filteredVideos.forEach((v: any) =>
+      window.open(`https://www.youtube.com/watch?v=${v.id.videoId}`, "_blank")
+    );
+  };
+
+  const handleSave = () => {
+    localStorage.setItem(
+      "savedPlaylist",
+      JSON.stringify({ mood: selectedMood, playlists: filteredVideos })
+    );
+    toast.success("Playlist saved successfully! 🎵");
+
+  };
+
+  // ✅ Filter only embeddable videos
+  const embeddableVideos = shuffledPlaylists.filter(
+    (video) => video.status?.embeddable ?? true
+  );
+
+  // ✅ Language-based filtering
+  const filteredVideos = embeddableVideos.filter((video) => {
+    if (languageFilter === "All") return true;
+
+    const title = video.snippet.title.toLowerCase();
+    const channel = video.snippet.channelTitle.toLowerCase();
+
+    if (languageFilter === "Hindi") return title.includes("hindi") || channel.includes("india");
+    if (languageFilter === "Nepali") return title.includes("nepali") || channel.includes("nepal");
+    if (languageFilter === "English")
+      return !title.includes("hindi") && !title.includes("nepali") && !channel.includes("india") && !channel.includes("nepal");
+
+    return true;
+  });
+
+  // ✅ PlayVideo conditional render
+  if (currentIndex !== null) {
+    return (
+      
+      <PlayVideo
+        videos={filteredVideos}
+        currentIndex={currentIndex}
+        setCurrentIndex={setCurrentIndex}
+        goBackToPlaylist={() => setCurrentIndex(null)}
+        changeMood={() => window.location.reload()}
+      />
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#0d0714]">
+                  <Toaster position="top-right" reverseOrder={false} />
+
+      <main className="mt-8 px-4 sm:px-6 md:px-10">
+        {/* Header */}
+        <div className="flex flex-wrap justify-between items-end gap-4 p-4">
+          <p className="text-white text-4xl sm:text-5xl font-black leading-tight tracking-[-0.033em] min-w-72">
+            Your {selectedMood} Playlist
+          </p>
+
+          {/* Language Filter & Mood selector */}
+          <div className="flex flex-wrap gap-3 px-2">
+            <div className="flex text-sm sm:text-md flex-wrap gap-3">
+              {["All", "English", "Hindi", "Nepali"].map((lang) => (
+                <button
+                  key={lang}
+                  onClick={() => setLanguageFilter(lang)}
+                  className={`px-6 py-2 cursor-pointer rounded-full font-bold transition ${languageFilter === lang
+                      ? "bg-[#7f13ec] text-white"
+                      : "bg-white/10 text-white hover:bg-white/20"
+                    }`}
+                >
+                  {lang}
+                </button>
+              ))}
+            </div>
+            <div className="w-full md:w-fit">
+              <button
+                onClick={() => window.location.reload()}
+                className="px-6 flex flex-row text-sm sm:text-md items-center justify-center gap-2 py-3 h-12 cursor-pointer rounded-full font-bold bg-white/10 text-white hover:bg-white/20 transition"
+              >
+                <SquarePen />
+                Choose Mood
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex justify-stretch my-6">
+          <div className="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-start">
+            <button
+              onClick={handlePlayAll}
+              className="flex cursor-pointer hover:scale-105 active:scale-95 items-center justify-center gap-2 rounded-full h-12 px-5 bg-[#7f13ec] text-white font-bold hover:bg-[#6a0ec7] transition"
+            >
+              <Play />
+              <span>Play All</span>
+            </button>
+            <button
+              onClick={handleSave}
+              className="flex cursor-pointer hover:scale-105 active:scale-95 items-center justify-center gap-2 rounded-full h-12 px-5 bg-white/10 text-white font-bold hover:bg-white/20 transition"
+            >
+              <ListPlus />
+              <span>Save Playlist</span>
+            </button>
+            <button
+              onClick={() =>
+                setShuffledPlaylists((prev) => [...prev].sort(() => Math.random() - 0.5))
+              }
+              className="flex cursor-pointer hover:scale-105 active:scale-95 items-center justify-center gap-2 rounded-full h-12 px-5 bg-white/10 text-white font-bold hover:bg-white/20 transition"
+            >
+              <Shuffle/> <span>Shuffle</span>
+            </button>
+
+          </div>
+        </div>
+
+        {/* Playlist Items */}
+        <div className="flex flex-col gap-2">
+          {filteredVideos.map((video, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-4 bg-[#191022]/30 px-4 min-h-[72px] py-2 justify-between rounded hover:bg-[#191022]/50 transition duration-300"
+              onClick={() => setCurrentIndex(index)}
+            >
+              <div className="flex items-center gap-4 w-full">
+                <div
+                  className="bg-center bg-cover rounded-lg size-14"
+                  style={{
+                    backgroundImage: `url(${video.snippet.thumbnails.default.url})`,
+                  }}
+                />
+                <div className="flex flex-col justify-center flex-grow">
+                  <p className="text-white text-base font-medium line-clamp-1">
+                    {video.snippet.title}
+                  </p>
+                  <p className="text-[#ad92c9] text-sm line-clamp-2">
+                    {video.snippet.channelTitle}
+                  </p>
+                </div>
+                <button className="text-white/70 hover:text-white">
+                  {video.duration || "⏱️"}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default ShowPlaylist;
