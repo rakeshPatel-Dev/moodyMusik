@@ -116,8 +116,11 @@ const App = () => {
           transition={{ duration: 0.5 }}
           className="flex items-center gap-3 text-gray-900 dark:text-white"
         >
-          <Music2 className="w-6 h-6 text-[#7f13ec]" />
-          <h2 className="text-lg font-bold tracking-tight">moodyMusik</h2>
+          <div className="h-20 rounded-full p-3 bg-white">
+
+          <img className="h-full" src="/public/moodymusik logo.svg" alt="logo" />
+          </div>
+          <h2 className="text-5xl font-bold tracking-tight">moodyMusik</h2>
         </motion.div>
       </header>
 
