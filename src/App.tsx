@@ -118,7 +118,7 @@ const App = () => {
         >
           <div className="h-20 rounded-full p-3 bg-white">
 
-          <img className="h-full" src="/public/moodymusik.png" alt="logo" />
+          <img className="h-full" src="/public/moodymusik logo.svg" alt="logo" />
           </div>
           <h2 className="text-5xl font-bold tracking-tight">moodyMusik</h2>
         </motion.div>
