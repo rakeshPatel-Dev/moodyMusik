@@ -24,11 +24,11 @@ export const moods = [
 
 const Home = ({ selectedMood, setSelectedMood, handleGeneratePlaylist }: any) => {
   return (
-    <div className="h-screen w-full overflow-hidden">
+    <div className="h-screen w-full">
         <div className="bg-orange-400/30 animation-spin h-70 w-84 rounded-full absolute top-0 left-0"></div>
-        <div className="bg-blue-600/10 h-60 w-60 animate-pulse rounded-full absolute top-1/4  left-3/5">
+        <div className="bg-blue-600/10 h-20 w-20 sm:h-60 sm:w-60 animate-pulse rounded-full absolute top-1/4  left-3/5">
         </div>
-        <div className="bg-blue-600/10 h-60 w-60 animate-pulse rounded-full absolute top-3/5 left-1/4">
+        <div className="bg-blue-600/10 h-20 w-20 sm:h-60 sm:w-60 animate-pulse rounded-full absolute top-3/5 left-1/4">
         </div>
 
         <div className="bg-orange-400/30 animation-pulse h-70 w-80 rounded-full absolute bottom-0 right-0"></div>
@@ -36,7 +36,7 @@ const Home = ({ selectedMood, setSelectedMood, handleGeneratePlaylist }: any) =>
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="transition-all duration-1000 font-display backdrop-blur-3xl text-gray-800 dark:text-white overflow-hidden min-h-screen flex flex-col"
+      className="transition-all duration-1000 font-display backdrop-blur-3xl text-gray-800 dark:text-white min-h-screen flex flex-col"
     >
       <header className="flex items-center justify-between px-4 md:px-10 lg:px-40 py-3">
         <motion.div

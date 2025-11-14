@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import PlayVideo from "./PlayVideo";
-import { ListPlus, Play, RotateCcw, Shuffle, SquarePen } from "lucide-react";
+import { ListPlus, Play, RotateCcw, Shuffle } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
+import { moods } from "./Home";
 
 interface ShowPlaylistProps {
   mood: string;
@@ -143,90 +144,109 @@ const ShowPlaylist: React.FC<ShowPlaylistProps> = ({ mood, playlists }) => {
 
   return (
     <div className="min-h-screen bg-[#0d0714]">
-      <Toaster position="top-right" reverseOrder={false} />
-      <main className="mt-8 px-4 sm:px-6 md:px-10">
+      <Toaster position="top-center" reverseOrder={false} />
+      <div className="bg-blue-800/20 h-96 w-96 blur-3xl fixed -translate-1/2 top-1/2 left-1/2"></div>
+      <div className="bg-blue-800/20 h-40 w-40 blur-3xl fixed bottom-0 right-40"></div>
+      {/* STAR / DOT BACKGROUND */}
+<div className="fixed h-full w-ful inset-0 pointer-events-none">
+  
+  {Array.from({ length: 120 }).map((_, i) => (
+    <div
+      key={i}
+      className="absolute bg-white/50 rounded-full"
+      style={{
+        width: Math.random() * 3 + 1 + "px",
+        height: Math.random() * 3 + 1 + "px",
+        top: Math.random() * 100 + "%",
+        left: Math.random() * 100 + "%",
+        opacity: Math.random() * 0.9 + 0.1,
+        filter: "blur(1px)",
+        animation: `float ${Math.random() * 8 + 6}s infinite ease-in-out`,
+        transformOrigin: `${Math.random() * 100}% ${Math.random() * 100}%`,
+      }}
+    />
+  ))}
+</div>
+
+      <main className="py-4 px-4 max-w-7xl mx-auto sm:px-6 md:px-10">
         {/* Header */}
-        <div className="flex flex-wrap justify-between items-end gap-4 p-4">
-          <p className="text-white text-4xl sm:text-5xl font-black leading-tight tracking-[-0.033em] min-w-72">
-            Your {selectedMood} Playlist
-          </p>
-
-          {/* Language Filter & Mood selector */}
-          <div className="flex flex-wrap gap-3 px-2">
-            <div className="flex text-sm sm:text-md flex-wrap gap-3">
-              {["All", "English", "Hindi", "Nepali"].map((lang) => (
-                <button
-                  key={lang}
-                  onClick={() => setLanguageFilter(lang)}
-                  className={`px-6 py-2 cursor-pointer rounded-full font-bold transition ${languageFilter === lang
-                    ? "bg-[#7f13ec] text-white"
-                    : "bg-white/10 text-white hover:bg-white/20"
-                  }`}
-                >
-                  {lang}
-                </button>
-              ))}
+        <div className="flex items-center justify-between whitespace-nowrap px-4 sm:px-6 md:px-10 py-3 backdrop-blur-sm rounded-full">
+          <div className="flex items-center gap-4 text-white">
+            <div className="size-6 text-primary">
+              {moods.find((m) => m.name === selectedMood)?.icon}
             </div>
-            <div className="w-full md:w-fit">
-              <button
-                onClick={() => window.location.reload()}
-                className="px-6 flex flex-row text-sm sm:text-md items-center justify-center gap-2 py-3 h-12 cursor-pointer rounded-full font-bold bg-white/10 text-white hover:bg-white/20 transition"
-              >
-                <RotateCcw/>
-                Change Mood
-              </button>
-            </div>
+            <h2 className="text-white text-lg sm:text-xl font-bold leading-tight tracking-[-0.015em]">Feeling {selectedMood}</h2>
           </div>
+          <button onClick={() => window.location.reload()} className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 bg-white/10 text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-white/20 active:scale-95 transition-colors">
+            <span className="truncate">New Mood</span>
+          </button>
         </div>
-
-        {/* Action Buttons */}
-        <div className="flex justify-stretch my-6">
-          <div className="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-start">
-            <button
-              onClick={handlePlayAll}
-              className="flex cursor-pointer hover:scale-105 active:scale-95 items-center justify-center gap-2 rounded-full h-12 px-5 bg-[#7f13ec] text-white font-bold hover:bg-[#6a0ec7] transition"
-            >
-              <Play />
-              <span>Play All</span>
-            </button>
-            <button
-              onClick={handleSave}
-              className="flex cursor-pointer hover:scale-105 active:scale-95 items-center justify-center gap-2 rounded-full h-12 px-5 bg-white/10 text-white font-bold hover:bg-white/20 transition"
-            >
-              <ListPlus />
-              <span>Save Playlist</span>
-            </button>
-            <button
-              onClick={() =>
-                setShuffledPlaylists((prev) => [...prev].sort(() => Math.random() - 0.5))
-              }
-              className="flex cursor-pointer hover:scale-105 active:scale-95 items-center justify-center gap-2 rounded-full h-12 px-5 bg-white/10 text-white font-bold hover:bg-white/20 transition"
-            >
-              <Shuffle /> <span>Shuffle</span>
-            </button>
-          </div>
-        </div>
-
         {/* Search Bar */}
-        <div className="w-full flex justify-between items-center gap-2 mb-4 px-3 py-2 rounded-md bg-white/10 backdrop-blur-md border border-white/20 text-white outline-none transition-all">
+        <div className="w-full  flex flex-col justify-center items-center gap-2 px-6 pb-10 text-white outline-none transition-all relative">
           <input
             type="text"
             placeholder="Can't find what you want? Search here ..."
             value={searchTerm}
             onChange={(e) => handleSearchChange(e.target.value)}
-            className="min-w-4/5 outline-none "
-            />
-            {loading && (
-              <span className="text-white flex flex-row  font-bold px-2 animate-pulse">... loading 🥴🥸</span>
-            )}
+            className="rounded-full w-full sm:w-3/4 md:w-2/3 lg:w-1/2 bg-white/5 focus:bg-white/4 px-6 py-4 backdrop-blur-2xl focus:ring-2 ring-purple-950 border border-white/20 outline-none "
+          />
+          {loading && (
+            <span className=" font-mono text-white flex flex-row  font-bold px-2 animate-pulse absolute bottom-0"> loading UR Choice... 🥴🥸</span>
+          )}
         </div>
+        {/* Action Buttons */}
+        <div className="flex justify-stretch my-6">
 
+          {/* Language Filter & Mood selector */}
+          <div className="flex flex-1 gap-3 flex-wrap px-4 py-3 justify-between">
+            <div className="flex flex-wrap gap-3 p-2 border-b sm:border-0 border-gray-400/20">
+              <div className="flex flex-wrap gap-3 items-center justify-center">
+                {["All", "English", "Hindi", "Nepali"].map((lang) => (
+                  <button
+                    key={lang}
+                    onClick={() => setLanguageFilter(lang)}
+                    className={`px-6 py-2 cursor-pointer rounded-full font-bold transition ${languageFilter === lang
+                      ? "bg-[#7f13ec] text-white"
+                      : "bg-white/10 text-white hover:bg-white/20"
+                      }`}
+                  >
+                    {lang}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {/* Actions btns  */}
+            <div className="flex flex-row gap-2">
+              <button
+                onClick={handlePlayAll}
+                className="flex cursor-pointer hover:scale-105 active:scale-95 items-center justify-center gap-2 rounded-full h-12 px-5 bg-[#7f13ec] text-white font-bold hover:bg-[#6a0ec7] transition"
+              >
+                <Play />
+                <span>Play All</span>
+              </button>
+              <button
+                onClick={() =>
+                  setShuffledPlaylists((prev) => [...prev].sort(() => Math.random() - 0.5))
+                }
+                className="flex cursor-pointer hover:scale-105 active:scale-95 items-center justify-center gap-2 rounded-full h-12 px-6 bg-white/10 text-white font-bold hover:bg-white/20 transition"
+              >
+                <Shuffle />
+              </button>
+              <button
+                onClick={handleSave}
+                className="flex cursor-pointer hover:scale-105 active:scale-95 items-center justify-center rounded-full h-12 px-6 bg-white/10 text-white font-bold hover:bg-white/20 transition"
+              >
+                <ListPlus />
+              </button>
+            </div>
+          </div>
+        </div>
         {/* Playlist Items */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 px-4">
           {listToShow.map((video, index) => (
             <div
               key={index}
-              className="flex items-center gap-4 bg-white/5 backdrop-blur-md px-4 min-h-[72px] py-2 justify-between rounded hover:bg-white/10 transition duration-300"
+              className="flex items-center gap-4 bg-white/5  backdrop-blur-2xl px-4 min-h-[72px] py-2 justify-between rounded-2xl hover:bg-white/10 cursor-pointer hover:scale-105 transition duration-300"
               onClick={() => setCurrentIndex(index)}
             >
               <div className="flex items-center gap-4 w-full">
@@ -236,7 +256,7 @@ const ShowPlaylist: React.FC<ShowPlaylistProps> = ({ mood, playlists }) => {
                     backgroundImage: `url(${video.snippet.thumbnails.default.url})`,
                   }}
                 />
-                <div className="flex flex-col justify-center flex-grow">
+                <div className="flex flex-col justify-center grow">
                   <p className="text-white text-base font-medium line-clamp-1">
                     {video.snippet.title}
                   </p>

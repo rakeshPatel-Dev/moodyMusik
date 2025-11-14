@@ -28,7 +28,7 @@ const App = () => {
     return (
       <>
         <ShowPlaylist playlists={playlists} mood={selectedMood} API_KEY={API_KEY} />
-        <Toaster position="top-right" />
+        <Toaster position="top-center" />
       </>
     );
   }
@@ -40,7 +40,7 @@ const App = () => {
         setSelectedMood={setSelectedMood}
         handleGeneratePlaylist={handleGeneratePlaylist}
       />
-      <Toaster position="top-right" />
+      <Toaster position="top-center" />
     </>
   );
 };

@@ -40,3 +40,25 @@ body {
 .iconShadow {
   box-shadow: inset 0 0 80px rgba(129, 129, 129, 0.4);
 }
+
+.animation-move {
+  animation: move 4s ease-in-out infinite;
+}
+
+@keyframes move {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(var(--tx-1, 20px), var(--ty-1, 15px));
+  }
+  50% {
+    transform: translate(var(--tx-2, -15px), var(--ty-2, 25px));
+  }
+  75% {
+    transform: translate(var(--tx-3, 25px), var(--ty-3, -20px));
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
