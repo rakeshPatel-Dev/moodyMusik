@@ -1,6 +1,5 @@
-import { ChevronLeft, ChevronRight, Edit, ListEnd } from "lucide-react";
-import React, {useState} from "react";
-import ReactPlayer from "react-player";
+import { ChevronLeft, ChevronRight, Edit, ListEnd, RotateCcw } from "lucide-react";
+// import React, {useState} from "react";
 
 
 interface PlayVideoProps {
@@ -24,7 +23,6 @@ const PlayVideo: React.FC<PlayVideoProps> = ({
   const nextVideo = () => setCurrentIndex((currentIndex + 1) % videos.length);
   const prevVideo = () =>
     setCurrentIndex((currentIndex - 1 + videos.length) % videos.length);
-  const [isPlaying, setIsPlaying] = useState(true);
 
 
   return (
@@ -69,7 +67,7 @@ const PlayVideo: React.FC<PlayVideoProps> = ({
             onClick={changeMood}
             className="px-4 py-2 cursor-pointer active:scale-95 transition-all flex flow-row gap-2 bg-white/10 text-white rounded-full hover:bg-white/20"
           >
-            <Edit/>Change Mood
+            <RotateCcw/>Change Mood
           </button>
         </div>
       </div>

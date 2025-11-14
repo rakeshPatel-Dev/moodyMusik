@@ -6,7 +6,6 @@ import { Music2, Camera, Heart, Smile, Zap, Frown, GraduationCap } from "lucide-
 import ShowPlaylist from "./pages/ShowPlaylist";
 import toast, { Toaster } from "react-hot-toast";
 
-
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
@@ -17,10 +16,10 @@ const fadeUp = {
 };
 
 const moods = [
-  { name: "Energetic", icon: <Zap/> },
-  { name: "Chill", icon: <Smile/> },
-  { name: "Romantic", icon: <Heart/> },
-  { name: "Sad", icon: <Frown/> },
+  { name: "Energetic", icon: <Zap /> },
+  { name: "Chill", icon: <Smile /> },
+  { name: "Romantic", icon: <Heart /> },
+  { name: "Sad", icon: <Frown /> },
   { name: "Focus", icon: <GraduationCap /> },
 ];
 
@@ -31,13 +30,14 @@ const App = () => {
   const [showPlaylist, setShowPlaylist] = useState(false);
   const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
-  const [background, setBackground] = useState("linear-gradient(to bottom right, #140423, #2c1a3f)");
+  const [background, setBackground] = useState(
+    "linear-gradient(to bottom right, #140423, #2c1a3f)"
+  );
 
   const handleGeneratePlaylist = async () => {
     if (!selectedMood) return toast.error("Select your mood first!!");
-    toast.success("Loading your playlist!!")
+    toast.success("Loading your playlist!!");
     setLoading(true);
-
 
     try {
       const searchResponse = await fetch(
@@ -46,7 +46,7 @@ const App = () => {
 
       const searchData = await searchResponse.json();
       if (!searchData.items || searchData.items.length === 0) {
-        toast.error("No playable videos found ", {icon: "😕"})
+        toast.error("No playable videos found 😕");
         return;
       }
 
@@ -62,7 +62,7 @@ const App = () => {
       // Merge duration info into original items
       const videosWithDetails = searchData.items.map((item: any, index: number) => {
         const durationISO = videoData.items[index]?.contentDetails?.duration;
-        const duration = formatYouTubeDuration(durationISO); // convert to readable format
+        const duration = formatYouTubeDuration(durationISO);
 
         // Detect language from title
         const title = item.snippet.title.toLowerCase();
@@ -83,7 +83,6 @@ const App = () => {
     }
   };
 
-  // helper function to format ISO 8601 duration
   function formatYouTubeDuration(isoDuration: string) {
     if (!isoDuration) return "N/A";
     const match = isoDuration.match(/PT(?:(\d+)M)?(?:(\d+)S)?/);
@@ -92,12 +91,14 @@ const App = () => {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   }
 
-
-
-
-
   if (showPlaylist) {
-    return <ShowPlaylist playlists={playlists} mood={selectedMood} />;
+    return (
+      <ShowPlaylist
+        playlists={playlists}
+        mood={selectedMood}
+        API_KEY={API_KEY} // pass API key for search
+      />
+    );
   }
 
   return (
@@ -108,7 +109,6 @@ const App = () => {
       className="transition-all duration-1000 font-display text-gray-800 dark:text-white min-h-screen flex flex-col"
       style={{ background }}
     >
-      {/* Header */}
       <header className="flex items-center justify-between border-b border-gray-200 dark:border-[#362348] px-4 md:px-10 lg:px-40 py-3">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
@@ -121,7 +121,6 @@ const App = () => {
         </motion.div>
       </header>
 
-      {/* Main Section */}
       <main className="flex flex-col items-center flex-1 py-10 md:py-16 px-4">
         <motion.h1
           variants={fadeUp}
@@ -143,7 +142,6 @@ const App = () => {
           Select a mood below to generate your personalized playlist.
         </motion.p>
 
-        {/* Mood Buttons */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -160,10 +158,11 @@ const App = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                className={`flex flex-col items-center justify-center gap-3 rounded-lg p-4 aspect-square cursor-pointer transition-all duration-300 ${isSelected
-                  ? "border-[#7f13ec] dark:border-[#7f13ec] shadow-lg shadow-[#7f13ec]/20"
-                  : "border-gray-200 dark:border-[#4d3267] bg-white dark:bg-[#261933]"
-                  }`}
+                className={`flex flex-col items-center justify-center gap-3 rounded-lg p-4 aspect-square cursor-pointer transition-all duration-300 ${
+                  isSelected
+                    ? "border-[#7f13ec] dark:border-[#7f13ec] shadow-lg shadow-[#7f13ec]/20"
+                    : "border-gray-200 dark:border-[#4d3267] bg-white dark:bg-[#261933]"
+                }`}
               >
                 {mood.icon}
                 <h2 className="text-gray-900 dark:text-white text-base font-bold">{mood.name}</h2>
@@ -172,7 +171,6 @@ const App = () => {
           })}
         </motion.div>
 
-        {/* Generate Button */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -190,14 +188,14 @@ const App = () => {
           </motion.button>
         </motion.div>
 
-        {/* Camera Button */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           animate="visible"
           custom={4}
-          className="flex px-4 py-3 justify-center" onClick={() => {
-            toast("Camera isn't available RN!", { icon: "🫠" })
+          className="flex px-4 py-3 justify-center"
+          onClick={() => {
+            toast("Camera isn't available RN!", { icon: "🫠" });
           }}
         >
           <motion.button
@@ -205,13 +203,13 @@ const App = () => {
             whileTap={{ scale: 0.95 }}
             className="flex items-center gap-2 h-10 px-4 rounded-full text-gray-500 dark:text-gray-400 text-sm font-bold hover:text-[#7f13ec] dark:hover:text-white transition-colors"
           >
-            <Camera className="w-5 h-5"  />
+            <Camera className="w-5 h-5" />
             Use Camera for AI Mood Detection
           </motion.button>
         </motion.div>
       </main>
-            <Toaster position="top-right" reverseOrder={false} />
 
+      <Toaster position="top-right" reverseOrder={false} />
     </motion.div>
   );
 };
