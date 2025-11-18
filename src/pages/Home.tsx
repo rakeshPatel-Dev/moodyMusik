@@ -36,14 +36,14 @@ const Home = ({ selectedMood, setSelectedMood, handleGeneratePlaylist }: any) =>
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="transition-all duration-1000 font-display backdrop-blur-3xl text-gray-800 dark:text-white min-h-screen flex flex-col"
+      className="transition-all duration-1000 font-display backdrop-blur-3xl text-white min-h-screen flex flex-col"
     >
       <header className="flex items-center justify-between px-4 md:px-10 lg:px-40 py-3">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex items-center gap-2 text-blue-800 dark:text-white"
+          className="flex items-center gap-2 text-white"
          >
           <Music2 size={30} className="text-blue-900" />
           <h2 className="text-2xl sm:5xl font-bold tracking-tight">moodyMusik</h2>
@@ -65,7 +65,7 @@ const Home = ({ selectedMood, setSelectedMood, handleGeneratePlaylist }: any) =>
           initial="hidden"
           animate="visible"
           custom={0}
-          className="text-gray-900 dark:text-white text-3xl sm:5xl md:text-7xl font-bold text-center pb-3 pt-6"
+          className="text-white text-3xl sm:5xl md:text-7xl font-bold text-center pb-3 pt-6"
         >
           How are you feeling today?
         </motion.h1>
@@ -75,7 +75,7 @@ const Home = ({ selectedMood, setSelectedMood, handleGeneratePlaylist }: any) =>
           initial="hidden"
           animate="visible"
           custom={1}
-          className="text-gray-600 dark:text-gray-300 text-base sm:text-xl font-mono text-center pb-8 md:pb-12"
+          className="text-gray-300 text-base sm:text-xl font-mono text-center pb-8 md:pb-12"
         >
           Select a mood below to generate your personalized playlist.
         </motion.p>
@@ -95,12 +95,12 @@ const Home = ({ selectedMood, setSelectedMood, handleGeneratePlaylist }: any) =>
                 onClick={() => setSelectedMood(mood.name)}
                 className={`flex flex-col items-center justify-center gap-3 rounded-full h-40 w-40 cursor-pointer transition-all duration-300 hover:scale-105 active:scale-95 active:translate-y-0 hover:-translate-y-2 ${
                   isSelected
-                    ? "border-[#7f13ec]  shadow-lg shadow-[#7f13ec]/20"
-                    : "border-gray-200 backdrop-blur-3xl dark:border-[#4d3267] bg-white/5 iconShadow border  hover:bg-white/10"
+                    ? "border-[#7f13ec]  bg-[#7f13ec]/5 shadow-lg shadow-[#7f13ec]/20"
+                    : " backdrop-blur-3xl border-[#4d3267] iconShadow border  hover:bg-white/5"
                 }`}
               >
                 {mood.icon}
-                <h2 className="text-gray-900 dark:text-white text-lg font-bold">{mood.name}</h2>
+                <h2 className="text-white text-lg font-bold">{mood.name}</h2>
               </motion.div>
             );
           })}
@@ -136,7 +136,7 @@ const Home = ({ selectedMood, setSelectedMood, handleGeneratePlaylist }: any) =>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 h-10 px-4 rounded-full text-gray-500 dark:text-gray-400 text-sm font-bold hover:text-[#7f13ec] dark:hover:text-white transition-colors"
+            className="flex items-center gap-2 h-10 px-4 rounded-full text-gray-400 text-sm font-bold hover:text-white transition-colors"
           >
             <Camera className="w-5 h-5" />
             Use Camera for AI Mood Detection
