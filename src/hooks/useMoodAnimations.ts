@@ -3,18 +3,29 @@ import { useMemo } from "react";
 export const useMoodAnimations = (mood: string) => {
   return useMemo(() => {
     switch (mood.toLowerCase()) {
-      case "happy":
-        return "linear-gradient(135deg, #ffe259 0%, #ffa751 100%)";
-      case "sad":
-        return "linear-gradient(135deg, #667db6 0%, #0082c8 50%, #667db6 100%)";
-      case "calm":
-        return "linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)";
       case "energetic":
-        return "linear-gradient(135deg, #f7971e 0%, #ffd200 100%)";
+        // Warm, confident, not childish
+        return "linear-gradient(135deg, #f4a261 0%, #e76f51 50%, #9b2226 100%)";
+
+      case "chill":
+        // Calm, glassy, spa-like
+        return "linear-gradient(135deg, #a1c4fd 0%, #3157b3 40%, #6ba4d9 100%)";
+
       case "romantic":
-        return "linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)";
+        // Soft luxury pink, not Valentine cringe
+        return "linear-gradient(135deg, #fbc2eb 0%, #a18cd1 50%, #5f4b8b 100%)";
+
+      case "sad":
+        // Moody, cinematic blue
+        return "linear-gradient(135deg, #2c3e50 0%, #4ca1af 50%, #2c3e50 100%)";
+
+      case "focus":
+        // Intelligent, techy, disciplined
+        return "linear-gradient(135deg, #1f4037 0%, #3a7d44 50%, #99f2c8 100%)";
+
       default:
-        return "linear-gradient(135deg, #4e54c8 0%, #8f94fb 100%)";
+        // Neutral premium fallback
+        return "linear-gradient(135deg, #232526 0%, #414345 100%)";
     }
   }, [mood]);
 };
