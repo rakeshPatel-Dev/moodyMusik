@@ -14,6 +14,7 @@ const App = () => {
   const [showPlaylist, setShowPlaylist] = useState(false);
   const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
+
   const handleGeneratePlaylist = async () => {
     if (!selectedMood) return toast.error("Select your mood first!!");
 
@@ -36,7 +37,7 @@ const App = () => {
   }
 
   return (
-    <>
+    <div className="overflow-hidden">
       <Toaster position="top-center" />
 
       <Routes>
@@ -51,7 +52,7 @@ const App = () => {
           handleGeneratePlaylist={handleGeneratePlaylist}
         />} />
       </Routes>
-    </>
+    </div>
   );
 };
 

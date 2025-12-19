@@ -12,6 +12,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background: #000;
   color: #fff;
+
 }
 
 .animation-spin {
@@ -136,7 +137,7 @@ body {
 
 .blob-2 {
   bottom: -200px;
-  right: -200px;
+  right: 0px;
   background: var(--secondary);
   animation: float 10s infinite ease-in-out reverse;
 }
@@ -145,11 +146,11 @@ body {
 
   0%,
   100% {
-    transform: translateY(0) scale(1);
+    transform: translateY(0) skew(1);
   }
 
   50% {
-    transform: translateY(-20px) scale(1.05);
+    transform: translateY(-20px) skew(-1);
   }
 }
 

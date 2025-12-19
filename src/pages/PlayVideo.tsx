@@ -25,6 +25,7 @@ const PlayVideo: React.FC<PlayVideoProps> = ({
     setCurrentIndex((currentIndex - 1 + videos.length) % videos.length);
 
 
+
   return (
     <div className="min-h-screen dark:bg-[#0d0714]">
       <div className="flex flex-col items-center py-10 px-4 max-w-6xl mx-auto">

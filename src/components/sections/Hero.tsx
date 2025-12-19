@@ -7,7 +7,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="container mx-auto max-w-7xl px-4 py-16 md:py-24">
+    <section className="container overflow-hidden mx-auto max-w-7xl px-4 py-16 md:py-24">
       <div className="flex flex-col md:flex-row items-center">
         <div className="md:w-1/2 mb-12 md:mb-0">
           <motion.h1
@@ -15,7 +15,7 @@ const Hero = () => {
             initial="hidden"
             animate="visible"
             custom={0}
-            className="heading text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-gray-900 dark:text-white"
+            className="heading text-4xl md:text-7xl text-center sm:text-left font-extrabold mb-6 leading-tight text-gray-900 dark:text-white"
           >
             Music that matches your{" "}
             <span className="gradient-text">mood</span>
@@ -26,7 +26,7 @@ const Hero = () => {
             initial="hidden"
             animate="visible"
             custom={1}
-            className="text-lg mb-8 text-gray-600 dark:text-gray-300"
+            className="text-lg mb-8 text-center sm:text-left text-gray-600 dark:text-gray-300"
           >
             MoodyMusik creates personalized playlists based on how you're
             feeling. Let your emotions guide your music discovery journey.
@@ -47,7 +47,7 @@ const Hero = () => {
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="flex items-center gap-2 py-3 px-8 rounded-full font-bold transition
+              className="flex items-center justify-center gap-2 py-3 px-8 rounded-full font-bold transition
                          bg-white text-purple-700 shadow-md hover:shadow-lg
                          dark:bg-white/10 dark:text-purple-300 dark:hover:bg-white/20"
             >
@@ -110,15 +110,15 @@ const Hero = () => {
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <button className="text-gray-600 dark:text-gray-400 hover:text-purple-600 transition">
+                  <button title="Button" className="text-gray-600 dark:text-gray-400 hover:text-purple-600 transition">
                     <SkipBack />
                   </button>
 
-                  <button className="gradient-bg w-14 h-14 rounded-full text-white flex items-center justify-center shadow-lg pulsing-animation">
+                  <button title="Button" className="gradient-bg w-14 h-14 rounded-full text-white flex items-center justify-center shadow-lg pulsing-animation">
                     <Pause strokeWidth={3} />
                   </button>
 
-                  <button className="text-gray-600 dark:text-gray-400 hover:text-purple-600 transition">
+                  <button title="Button" className="text-gray-600 dark:text-gray-400 hover:text-purple-600 transition">
                     <SkipForward />
                   </button>
                 </div>

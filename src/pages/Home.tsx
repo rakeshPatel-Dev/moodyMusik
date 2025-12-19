@@ -24,7 +24,7 @@ export const moods = [
 const Home = ({ selectedMood, setSelectedMood, handleGeneratePlaylist }: any) => {
   return (
 
-    <div className="overflow-hidden dark:bg-[#121212]  ">
+    <div className=" overflow-x-hidden dark:bg-[#121212]  ">
       <Toaster />
       <div id="canvas-container" />
       <div className="absolute z-50 blob blob-1" />
